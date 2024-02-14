@@ -1,0 +1,48 @@
+#road1 {
+    left: 40%;
+    width: 10svw;
+    height: 100%;
+
+}
+#road2 {
+    width: 100%;
+    height: 10svw;
+    top: 42.5%;
+}
+#fence1{
+    left: 53.1%;
+    top: 61.1%;
+}
+#fenceLeft1{
+    left:53.4%;
+    top: 61.2%;
+    width: 40svw;
+}
+#fence2{
+    left: 53.1%;
+    top: 41.1%;
+}
+#fenceLeft2{
+    left:53.4%;
+    top: 41.2%;
+    width: 40svw;
+}
+#fence3{
+    left: 40.5%;
+    top: 41.1%;
+    z-index: 3;
+}
+#fenceTop1{
+    left:40.5%;
+    top: -2%;
+    height: 20svw;
+}
+.tpAble{
+    position: absolute;
+}
+#to2{
+    width: 2%;
+    height: 20%;
+    right: 0px;
+    top: 43%;
+}

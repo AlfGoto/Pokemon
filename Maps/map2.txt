@@ -1,0 +1,3 @@
+<div class='road' id='road1'></div>
+<div class="fenceLeft notWalbable" id="fenceLeft1"></div>
+<div class="fenceLeft notWalbable" id="fenceLeft2"></div>
