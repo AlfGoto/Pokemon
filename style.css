@@ -1,0 +1,103 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+body {
+    height: 100svh;
+    width: 100svw;
+
+    #GameArea {
+        overflow: hidden;
+        position: absolute;
+        top: .5svw;
+        left: 15svw;
+        height: 45svw;
+        width: 70svw;
+        border: black 2px solid;
+        background-image: url(spriteSheets/grass.png);
+        background-size: 3svw 3svw;
+
+        #buildingDIV {
+            height: 100%;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+
+            div{
+                position: absolute;
+            }
+
+            .road {
+                background-image: url(spriteSheets/road.jpg);
+                background-size: 3svw 3svw;
+            }
+            .fence{
+                background-image: url(spriteSheets/fence.png);
+                background-size: .75svw 1.5svw;
+                height: 1.5svw;
+                width: .75svw;
+                z-index: 2;
+            }
+            .fenceLeft{
+                background-image: url(spriteSheets/fenceLeft.png);
+                background-size: 1.6svw 1.4svw;
+                height: 1.4svw;
+                z-index: 2;
+            }
+            .fenceTop{
+                background-image: url(spriteSheets/fenceTop.png);
+                z-index: 2;
+            }
+
+            #road1 {
+                left: 40%;
+                width: 10svw;
+                height: 100%;
+
+            }
+            #road2 {
+                width: 100%;
+                height: 10svw;
+                top: 42.5%;
+            }
+            #fence1{
+                left: 53.1%;
+                top: 61.1%;
+            }
+            #fenceLeft1{
+                left:53.4%;
+                top: 61.2%;
+                width: 40svw;
+            }
+            #fence2{
+                left: 53.1%;
+                top: 41.1%;
+            }
+            #fenceLeft2{
+                left:53.4%;
+                top: 41.2%;
+                width: 40svw;
+            }
+        }
+    }
+}
+
+#perso {
+    position: absolute;
+    z-index: 2;
+
+    #spritePerso {
+        margin-top: -100%;
+        margin-left: -50%;
+        position: relative;
+        height: 2.7svw;
+        width: 2svw;
+        background-size: 20svw 16svw;
+        background-image: url(spriteSheets/basic.png);
+    }
+}
