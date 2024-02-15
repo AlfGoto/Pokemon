@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let spritePerso = document.getElementById('spritePerso')
 
 
-    loadRoom(1)
+    let currentRoom = 1
+    loadRoom(currentRoom)
     function loadRoom(arg) {
         document.getElementById('mapCSSLINK').href = 'Maps/map' + arg + '.css'
 
@@ -11,34 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('buildingDIV').innerHTML = data
         })
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    function getTpPos(arg) {
+        fetch('MapsPositionsSpawn/'  + currentRoom + 'to' + arg + '.txt').then(response => response.text()).then((data) => {
+            currentRoom = arg
+            perso.style.left = data.split('/')[0]
+            perso.style.top = data.split('/')[1]
+        })
+    }
 
     perso.style.left = (pxToSvw(window.innerWidth / 2) - 15) + 'svw'
     perso.style.top = (pxToSvw(window.innerHeight / 2)) + 'svw'
@@ -89,25 +69,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function moveUp() {
         if (!isWalkable(0, -moveDistance)) { zPressed == false; return }
-        if (isNewRoom(0, -moveDistance)) { zPressed == false; return }
+        if (isNewRoom(0, -moveDistance)) { return }
         perso.style.top = (Number(perso.style.top.replace('svw', '')) - moveDistance) + 'svw'
         if (zPressed) { setTimeout(moveUp, 10) }
     }
     function moveDown() {
         if (!isWalkable(0, moveDistance)) { zPressed == false; return }
-        if (isNewRoom(0, moveDistance)) { zPressed == false; return }
+        if (isNewRoom(0, moveDistance)) { return }
         perso.style.top = (Number(perso.style.top.replace('svw', '')) + moveDistance) + 'svw'
         if (sPressed) { setTimeout(moveDown, 10) }
     }
     function moveLeft() {
         if (!isWalkable(-moveDistance, 0)) { zPressed == false; return }
-        if (isNewRoom(-moveDistance, 0)) { zPressed == false; return }
+        if (isNewRoom(-moveDistance, 0)) { return }
         perso.style.left = (Number(perso.style.left.replace('svw', '')) - moveDistance) + 'svw'
         if (qPressed) { setTimeout(moveLeft, 10) }
     }
     function moveRight() {
         if (!isWalkable(moveDistance, 0)) { zPressed == false; return }
-        if (isNewRoom(moveDistance, 0)) { zPressed == false; return }
+        if (isNewRoom(moveDistance, 0)) { return }
         perso.style.left = (Number(perso.style.left.replace('svw', '')) + moveDistance) + 'svw'
         if (dPressed) { setTimeout(moveRight, 10) }
     }
@@ -159,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (pxToSvw(x) < 15.5 || pxToSvw(x) > 84 || pxToSvw(y) < 2.8 || pxToSvw(y) > 45) { return false }
 
-        let arr = document.getElementsByClassName('notWalbable')
+        let arr = document.getElementsByClassName('notWalkable')
         for (let i = 0; i < arr.length; i++) {
             let boundingRect = arr[i].getBoundingClientRect()
             if (x < boundingRect.right && x > boundingRect.left && y < boundingRect.bottom && y > boundingRect.top) {
@@ -176,16 +156,13 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < arr.length; i++) {
             let boundingRect = arr[i].getBoundingClientRect()
             if (x < boundingRect.right && x > boundingRect.left && y < boundingRect.bottom && y > boundingRect.top) {
-                console.log(arr[i].id.replace('to', ''))
                 loadRoom(arr[i].id.replace('to', ''))
+                getTpPos(arr[i].id.replace('to', ''))
                 return true
             }
         }
         return false
     }
-
-
-
 
     function pxToSvw(arg) { return arg * (100 / Number(window.getComputedStyle(document.body)['width'].replace('px', ''))) }
     function svwToPx(arg) { return arg * (Number(window.getComputedStyle(document.body)['width'].replace('px', '') / 100)) }

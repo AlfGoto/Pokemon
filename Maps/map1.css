@@ -1,7 +1,7 @@
 #road1 {
     left: 40%;
     width: 10svw;
-    height: 100%;
+    height: 60%;
 
 }
 #road2 {
@@ -37,12 +37,15 @@
     top: -2%;
     height: 20svw;
 }
-.tpAble{
-    position: absolute;
-}
 #to2{
     width: 2%;
     height: 20%;
     right: 0px;
+    top: 43%;
+}
+#to3{
+    width: 2%;
+    height: 20%;
+    left: 0px;
     top: 43%;
 }

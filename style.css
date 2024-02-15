@@ -28,32 +28,45 @@ body {
             position: relative;
             z-index: 1;
 
-            div{
+            div {
                 position: absolute;
             }
-
+            .tpAble {
+                position: absolute;
+            }
             .road {
                 background-image: url(spriteSheets/road.jpg);
                 background-size: 3svw 3svw;
             }
-            .fence{
+            .fence {
                 background-image: url(spriteSheets/fence.png);
                 background-size: .8svw 1.5svw;
                 height: 1.5svw;
                 width: .8svw;
                 z-index: 2;
             }
-            .fenceLeft{
+            .fenceLeft {
                 background-image: url(spriteSheets/fenceLeft.png);
                 background-size: 1.6svw 1.4svw;
                 height: 1.4svw;
                 z-index: 2;
             }
-            .fenceTop{
+            .fenceTop {
                 background-image: url(spriteSheets/fenceTop.png);
                 background-size: .75svw 1.4svw;
                 width: .75svw;
                 z-index: 2;
+            }
+            .bigBoulder{
+                background-image: url(spriteSheets/bigBoulder.png);
+                background-size: 14svw 10svw;
+                width: 14svw;
+                height: 10svw;
+                z-index: 3;
+            }
+            .water{
+                background-image: url(spriteSheets/water.jpg);
+                background-size: 20svw 20svw;
             }
         }
     }
@@ -71,5 +84,30 @@ body {
         width: 2svw;
         background-size: 20svw 16svw;
         background-image: url(spriteSheets/basic.png);
+    }
+}
+
+#pokemonTab{
+    position: absolute;
+    left: 85svw;
+    top: .5svw;
+    height: 45svw;
+    width: 14svw;
+    padding-left: 1svw;
+    /* background-color: red; */
+
+    #pokemonList{
+        /* background-color: lightgray; */
+        width: 100%;
+        height: 45%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1svw;
+
+        .pokemonCase{
+            width: 45%;
+            height: 30%;
+            border: solid 2px black;
+        }
     }
 }
