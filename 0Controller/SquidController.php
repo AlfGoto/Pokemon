@@ -1,14 +1,23 @@
 <?php
 
-include'0Model/SquidModel.php';
+$path = $_SERVER['DOCUMENT_ROOT'];
+$path .= "/0Model/SquidModel.php";
+include $path;
 
-class controller{
+class controller
+{
     private $model;
-    public function __construct(){
+    public function __construct()
+    {
         $this->model = new Model();
     }
-    public function getPokemonsOfUser($id){
+    public function getPokemonsOfUser($id)
+    {
         return $this->model->getPokemonsOfUser($id);
+    }
+    public function getPokemonWithId($id)
+    {
+        return json_encode($this->model->getPokemonWithId($id));
     }
 }
 

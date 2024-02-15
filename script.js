@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
     function getTpPos(arg) {
-        fetch('MapsPositionsSpawn/'  + currentRoom + 'to' + arg + '.txt').then(response => response.text()).then((data) => {
+        fetch('MapsPositionsSpawn/' + currentRoom + 'to' + arg + '.txt').then(response => response.text()).then((data) => {
             currentRoom = arg
             perso.style.left = data.split('/')[0]
             perso.style.top = data.split('/')[1]
@@ -166,5 +166,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function pxToSvw(arg) { return arg * (100 / Number(window.getComputedStyle(document.body)['width'].replace('px', ''))) }
     function svwToPx(arg) { return arg * (Number(window.getComputedStyle(document.body)['width'].replace('px', '') / 100)) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    for (let i = 0; i < 6; i++) {
+        
+        if (pokemonsOfUser[i] != null) {
+            alfjax('0Controller/Ajax/getPokemonWithId.php', { id: pokemonsOfUser[i] }, (e)=>{
+                e = e[0]
+                console.log(e)
+                document.getElementsByClassName('pokemonCase')[i].style.backgroundImage = 'url(sprite_Pokemon/' + e.id_pokemon +'.png'
+                
+                let progress = document.createElement('progress')
+                document.getElementsByClassName('pokemonCase')[i].append(progress)
+                progress.max = 100
+                progress.value = ((e.hp / e.maxhp) * 100)
+            })
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    function alfjax(url, data = {}, success = () => { console.log('AlfJAX was successful') }) {
+        data = Object.keys(data).map(function (key) { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]); }).join('&');
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send(data);
+        xhr.onload = function (e) {
+            if (xhr.statusText == 'OK') {
+                success(JSON.parse(xhr.response))
+            } else {
+                console.error(xhr.statusText)
+            }
+        }
+    }
 
 })

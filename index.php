@@ -4,7 +4,7 @@ include "0Controller/SquidController.php";
 
 $pokemons = $squid->getPokemonsOfUser(1);
 
-
+echo "<script>window.pokemonsOfUser = " . json_encode($pokemons) . "</script>"
 
 ?>
 
