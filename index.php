@@ -23,6 +23,7 @@ echo "<script>window.pokemonsOfUser = " . json_encode($pokemons) . "</script>"
 
 <body>
     <div id="GameArea">
+        <div id="blackScreen"></div>
         <div id="perso">
             <div id="spritePerso"></div>
         </div>

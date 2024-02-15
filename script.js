@@ -6,18 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRoom = 1
     loadRoom(currentRoom)
     function loadRoom(arg) {
+        document.getElementById('blackScreen').style.display = 'block'
         document.getElementById('mapCSSLINK').href = 'Maps/map' + arg + '.css'
 
         fetch('Maps/map' + arg + '.txt').then(response => response.text()).then((data) => {
             document.getElementById('buildingDIV').innerHTML = data
+            document.getElementById('blackScreen').style.display = 'none'
         })
-    }
-    function getTpPos(arg) {
-        fetch('MapsPositionsSpawn/' + currentRoom + 'to' + arg + '.txt').then(response => response.text()).then((data) => {
-            currentRoom = arg
-            perso.style.left = data.split('/')[0]
-            perso.style.top = data.split('/')[1]
-        })
+
+        if (currentRoom != arg) {
+            fetch('MapsPositionsSpawn/' + currentRoom + 'to' + arg + '.txt').then(response => response.text()).then((data) => {
+                currentRoom = arg
+                perso.style.left = data.split('/')[0]
+                perso.style.top = data.split('/')[1]
+            })
+        }
     }
 
     perso.style.left = (pxToSvw(window.innerWidth / 2) - 15) + 'svw'
@@ -157,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let boundingRect = arr[i].getBoundingClientRect()
             if (x < boundingRect.right && x > boundingRect.left && y < boundingRect.bottom && y > boundingRect.top) {
                 loadRoom(arr[i].id.replace('to', ''))
-                getTpPos(arr[i].id.replace('to', ''))
+                // getTpPos(arr[i].id.replace('to', ''))
                 return true
             }
         }
@@ -195,13 +198,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     for (let i = 0; i < 6; i++) {
-        
+
         if (pokemonsOfUser[i] != null) {
-            alfjax('0Controller/Ajax/getPokemonWithId.php', { id: pokemonsOfUser[i] }, (e)=>{
+            alfjax('0Controller/Ajax/getPokemonWithId.php', { id: pokemonsOfUser[i] }, (e) => {
                 e = e[0]
                 console.log(e)
-                document.getElementsByClassName('pokemonCase')[i].style.backgroundImage = 'url(sprite_Pokemon/' + e.id_pokemon +'.png'
-                
+                document.getElementsByClassName('pokemonCase')[i].style.backgroundImage = 'url(sprite_Pokemon/' + e.id_pokemon + '.png'
+
                 let progress = document.createElement('progress')
                 document.getElementsByClassName('pokemonCase')[i].append(progress)
                 progress.max = 100
