@@ -21,4 +21,9 @@ class Model
         $query->execute();
         return $query->fetchAll();
     }
+    public function healPokemonWithId($id){
+        $query = $this->pdo->prepare('UPDATE Existing_Pokemon SET hp=maxhp WHERE id LIKE :id');
+        $query->bindValue(':id', $id);
+        $query->execute();
+    }
 }

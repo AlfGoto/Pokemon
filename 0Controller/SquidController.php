@@ -19,6 +19,10 @@ class controller
     {
         return json_encode($this->model->getPokemonWithId($id));
     }
+    public function healPokemonWithId($id)
+    {
+        $this->model->healPokemonWithId($id);
+    }
 }
 
 

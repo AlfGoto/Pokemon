@@ -4,8 +4,12 @@
 <div class="fenceLeft notWalkable" id="fenceLeft2"></div>
 <div class="fence notWalkable" id="fence3"></div>
 <div class="fenceTop notWalkable" id="fenceTop1"></div>
+
 <div id="road1" class=" road"></div>
 <div id="road2" class=" road"></div>
-<div id="grass1" class=" grass"></div>
+
+<div id="tallGrass1" class="tallGrass"></div>
+<div id="tallGrass2" class="tallGrass"></div>
+
 <div class='tpAble' id='to2'></div>
 <div class='tpAble' id='to3'></div>

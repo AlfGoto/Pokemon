@@ -32,25 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPersoSprite = 2
 
     document.addEventListener('keydown', (e) => {
-        if (e.key == "z") {
+        if (e.keyCode == 90 || e.keyCode == 38) {
             if (!zPressed && !sPressed && !qPressed && !dPressed) {
                 zPressed = true
                 moveUp()
                 spriteMoveUp()
             }
-        } else if (e.key == 's') {
+        } else if (e.keyCode == 83 || e.keyCode == 40) {
             if (!zPressed && !sPressed && !qPressed && !dPressed) {
                 sPressed = true
                 moveDown()
                 spriteMoveDown()
             }
-        } else if (e.key == 'q') {
+        } else if (e.keyCode == 81 || e.keyCode == 37) {
             if (!zPressed && !sPressed && !qPressed && !dPressed) {
                 qPressed = true
                 moveLeft()
                 spriteMoveLeft()
             }
-        } else if (e.key == 'd') {
+        } else if (e.keyCode == 68 || e.keyCode == 39) {
             if (!zPressed && !sPressed && !qPressed && !dPressed) {
                 dPressed = true
                 moveRight()
@@ -59,13 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
     document.addEventListener('keyup', (e) => {
-        if (e.key == "z") {
+        if (e.keyCode == 90 || e.keyCode == 38) {
             zPressed = false
-        } else if (e.key == 's') {
+        } else if (e.keyCode == 83 || e.keyCode == 40) {
             sPressed = false
-        } else if (e.key == 'q') {
+        } else if (e.keyCode == 81 || e.keyCode == 37) {
             qPressed = false
-        } else if (e.key == 'd') {
+        } else if (e.keyCode == 68 || e.keyCode == 39) {
             dPressed = false
         }
     })
@@ -137,10 +137,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function isWalkable(changeX, changeY) {
+        if(fightOn){return false}
         let x = document.getElementById('perso').getBoundingClientRect().x + svwToPx(changeX)
         let y = document.getElementById('perso').getBoundingClientRect().y + svwToPx(changeY)
 
         if (pxToSvw(x) < 15.5 || pxToSvw(x) > 84 || pxToSvw(y) < 2.8 || pxToSvw(y) > 45) { return false }
+
+        let tallGrassDivsArr = document.getElementsByClassName('tallGrass')
+        for(let i = 0; i < tallGrassDivsArr.length; i++){
+            let boundingRect = tallGrassDivsArr[i].getBoundingClientRect()
+            if (x < boundingRect.right && x > boundingRect.left && y < boundingRect.bottom && y > boundingRect.top) {
+                if(Math.random() < 0.01){
+                    fightStart()
+                }
+            }
+        }
 
         let arr = document.getElementsByClassName('notWalkable')
         for (let i = 0; i < arr.length; i++) {
@@ -167,52 +178,70 @@ document.addEventListener('DOMContentLoaded', () => {
         return false
     }
 
-    function pxToSvw(arg) { return arg * (100 / Number(window.getComputedStyle(document.body)['width'].replace('px', ''))) }
-    function svwToPx(arg) { return arg * (Number(window.getComputedStyle(document.body)['width'].replace('px', '') / 100)) }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    let pokemonInCase = []
+    //afficher les 6 pokemons
     for (let i = 0; i < 6; i++) {
-
         if (pokemonsOfUser[i] != null) {
             alfjax('0Controller/Ajax/getPokemonWithId.php', { id: pokemonsOfUser[i] }, (e) => {
                 e = e[0]
-                console.log(e)
+                // console.log(e)
                 document.getElementsByClassName('pokemonCase')[i].style.backgroundImage = 'url(sprite_Pokemon/' + e.id_pokemon + '.png'
+                pokemonInCase.push(e)
 
                 let progress = document.createElement('progress')
                 document.getElementsByClassName('pokemonCase')[i].append(progress)
+                progress.classList.add('pokemonHpBar')
                 progress.max = 100
                 progress.value = ((e.hp / e.maxhp) * 100)
             })
         }
     }
 
+    document.getElementById('healButton').addEventListener('click', () => {
+        let barresdHP = document.getElementsByClassName('pokemonHpBar')
+        for (let i = 0; i < barresdHP.length; i++) {
+            barresdHP[i].value = 100
+            alfjax('0Controller/Ajax/healPokemonWithId.php', { id: pokemonsOfUser[i] })
+        }
+    })
+
+
+
+    //pokemonSauvage
+    let fightOn = false
+    function fightStart(){
+        fightOn = true
+        document.getElementById('blackScreen').style.display = 'block'
+
+        let imgFront = document.createElement('img')
+        document.getElementById('frontPokemon').appendChild(imgFront)
+        imgFront.src = "sprite_Pokemon/" + Math.floor(Math.random() * 151) + ".png"
+
+        let imgBack = document.createElement('img')
+        document.getElementById('backPokemon').appendChild(imgBack)
+        imgBack.src = "sprite_Pokemon/back/" + pokemonInCase[0].id_pokemon + ".png"
+        console.log('your pokemon', pokemonInCase[0])
+
+
+
+        if(Math.random() < 0.5){
+            document.getElementById('blackScreen').classList.add('fightStart1')
+        } else {
+            document.getElementById('blackScreen').classList.add('fightStart2')
+        }
+        setTimeout(()=>{
+            document.getElementById('battleBackground').style.display = 'block'
+
+            setTimeout(()=>{
+                document.getElementById('frontPokemon').style.display = 'flex'
+                document.getElementById('backPokemon').style.display = 'flex'
+            }, 1000)
+        },1000)
+    }
 
 
 
@@ -222,19 +251,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    function alfjax(url, data = {}, success = () => { console.log('AlfJAX was successful') }) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function alfjax(url, data = {}, success = null) {
         data = Object.keys(data).map(function (key) { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]); }).join('&');
         const xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
         xhr.send(data);
         xhr.onload = function (e) {
-            if (xhr.statusText == 'OK') {
+            if (xhr.statusText == 'OK' && success != null) {
                 success(JSON.parse(xhr.response))
             } else {
                 console.error(xhr.statusText)
             }
         }
     }
+    function pxToSvw(arg) { return arg * (100 / Number(window.getComputedStyle(document.body)['width'].replace('px', ''))) }
+    function svwToPx(arg) { return arg * (Number(window.getComputedStyle(document.body)['width'].replace('px', '') / 100)) }
+
 
 })

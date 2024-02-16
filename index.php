@@ -23,12 +23,17 @@ echo "<script>window.pokemonsOfUser = " . json_encode($pokemons) . "</script>"
 
 <body>
     <div id="GameArea">
-        <div id="blackScreen"></div>
+        <div id="blackScreen">
+            <div id="frontPokemon"></div>
+            <div id="backPokemon"></div>
+            <img id="battleBackground" src="spriteSheets/battleBackground.jpg"></img>
+        </div>
+
         <div id="perso">
             <div id="spritePerso"></div>
         </div>
-        <section id="buildingDIV">
-        </section>
+
+        <section id="buildingDIV"></section>
     </div>
     <div id="pokemonTab">
         <div id="pokemonList">
@@ -39,6 +44,7 @@ echo "<script>window.pokemonsOfUser = " . json_encode($pokemons) . "</script>"
             <div class="pokemonCase"></div>
             <div class="pokemonCase"></div>
         </div>
+        <button id='healButton'>Heal</button>
     </div>
 </body>
 

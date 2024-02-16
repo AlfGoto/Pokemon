@@ -68,6 +68,10 @@ body {
                 background-image: url(spriteSheets/water.jpg);
                 background-size: 20svw 20svw;
             }
+            .tallGrass{
+                background-image: url(spriteSheets/tallGrass.png);
+                background-size: 2svw;
+            }
         }
 
         #blackScreen{
@@ -77,6 +81,56 @@ body {
             width: 100%;
             background-color: black;
             z-index: 100;
+
+            &.fightStart1{
+                animation: 1s slideToTop linear;
+            }
+            &.fightStart2{
+                animation: 1s slideToBot linear;
+            }
+        }
+        #battleBackground{
+            height: 100%;
+            display: none;
+            animation: 2s linear slideToRight;
+        }
+        #frontPokemon{
+            background-image: url(spriteSheets/battleSol.png);
+            background-size: 30svw 18svw;
+            height: 18svw;
+            width: 30svw;
+            display: none;
+            position: absolute;
+            top: 8svw;
+            right: 0svw;
+            z-index: 10;
+            animation: solSlideToRight linear 1s;
+
+            align-items: center;
+            justify-content: center;
+
+            img{
+                height: 80%;
+            }
+        }
+        #backPokemon{
+            background-image: url(spriteSheets/battleSol.png);
+            background-size: 30svw 18svw;
+            height: 18svw;
+            width: 30svw;
+            display: none;
+            position: absolute;
+            bottom: -5svw;
+            left: 0svw;
+            z-index: 10;
+            animation: solSlideToLeft linear 1s;
+
+            align-items: center;
+            justify-content: center;
+
+            img{
+                height: 100%;
+            }
         }
     }
 }
@@ -132,4 +186,32 @@ body {
             }
         }
     }
+
+    #healButton{
+        height: 3svw;
+        width: 8svw;
+        margin: 2svw;
+    }
 }   
+
+
+@keyframes slideToTop{
+    from{transform: translateY(100%);}
+    to{transform: translateY(0%);}
+}
+@keyframes slideToBot{
+    from{transform: translateY(-100%);}
+    to{transform: translateY(0%);}
+}
+@keyframes slideToRight{
+    from{transform: translateX(-100%);}
+    to{transform: translateX(0%);}
+}
+@keyframes solSlideToRight{
+    from{transform: translateX(-100svw);}
+    to{transform: translateX(0%);}
+}
+@keyframes solSlideToLeft{
+    from{transform: translateX(100svw);}
+    to{transform: translateX(0%);}
+}
